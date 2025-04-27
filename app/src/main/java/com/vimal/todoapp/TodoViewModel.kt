@@ -3,12 +3,11 @@ package com.vimal.todoapp
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
-class TodoViewModel: ViewModel() {
-    private var _todoList = MutableLiveData<List<Todo>>()
-    val todoList: LiveData<List<Todo>> = _todoList
+class TodoViewModel(todoDao: Any) : ViewModel() {
+
+    val todoList: LiveData<List<Todo>> = todoDao.getAllTodo()
 
     fun getAllTodo() {
         _todoList.value = TodoManager.getAllTodo().reversed()
