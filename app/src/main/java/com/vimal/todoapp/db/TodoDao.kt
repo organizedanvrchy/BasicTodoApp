@@ -1,4 +1,7 @@
 package com.vimal.todoapp.db
 
-class TodoDao {
+import androidx.room.Dao
+
+@Dao
+interface TodoDao {
 }
