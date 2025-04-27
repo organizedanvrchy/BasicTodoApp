@@ -4,23 +4,23 @@ import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
+import java.time.Instant
+import java.util.Date
 
 class TodoViewModel(todoDao: Any) : ViewModel() {
+    val todoDao = MainApplication.todoDatabase.getTodoDao()
 
     val todoList: LiveData<List<Todo>> = todoDao.getAllTodo()
 
-    fun getAllTodo() {
-        _todoList.value = TodoManager.getAllTodo().reversed()
-    }
-
     @RequiresApi(Build.VERSION_CODES.O)
     fun addTodo(title: String) {
-        TodoManager.addTodo(title)
-        getAllTodo()
+        todoDao.addTodo(Todo(
+            title = title,
+            createdAt = Date.from(Instant.now())
+        ))
     }
 
     fun deleteTodo(id: Int) {
-        TodoManager.deleteTodo(id)
-        getAllTodo()
+        todoDao.deleteTodo(id)
     }
 }
