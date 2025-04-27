@@ -52,14 +52,15 @@ fun TodoListPage(viewModel: TodoViewModel) {
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(7.dp),
-            horizontalArrangement = Arrangement.SpaceEvenly
+            horizontalArrangement = Arrangement.Absolute.SpaceBetween,
         ) {
             OutlinedTextField(value = inputText, onValueChange = {
                 inputText = it
             })
-            Button(onClick = {
-                viewModel.addTodo(inputText)
-                inputText = ""
+            Button(
+                onClick = {
+                    viewModel.addTodo(inputText)
+                    inputText = ""
             }) {
                 Text(text = "Add")
             }
