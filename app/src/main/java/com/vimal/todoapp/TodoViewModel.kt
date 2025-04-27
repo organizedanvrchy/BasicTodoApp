@@ -7,10 +7,10 @@ import androidx.lifecycle.ViewModel
 import java.time.Instant
 import java.util.Date
 
-class TodoViewModel(todoDao: Any) : ViewModel() {
+class TodoViewModel: ViewModel() {
     val todoDao = MainApplication.todoDatabase.getTodoDao()
 
-    val todoList: LiveData<List<Todo>> = todoDao.getAllTodo()
+    val todoList: LiveData<List<Todo>> = todoDao.getAllTodos()
 
     @RequiresApi(Build.VERSION_CODES.O)
     fun addTodo(title: String) {

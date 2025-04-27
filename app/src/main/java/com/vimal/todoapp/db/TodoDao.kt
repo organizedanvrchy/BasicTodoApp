@@ -8,8 +8,8 @@ import com.vimal.todoapp.Todo
 
 @Dao
 interface TodoDao {
-    @Query("SELECT * FROM Todo")
-    fun getAllTodo(): LiveData<List<Todo>>
+    @Query("SELECT * FROM Todo ORDER BY createdAt DESC")
+    fun getAllTodos(): LiveData<List<Todo>>
 
     @Insert
     fun addTodo(todo: Todo)
