@@ -11,12 +11,13 @@ class TodoViewModel: ViewModel() {
     val todoList: LiveData<List<Todo>> = _todoList
 
     fun getAllTodo() {
-        _todoList.value = TodoManager.getAllTodo()
+        _todoList.value = TodoManager.getAllTodo().reversed()
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
     fun addTodo(title: String) {
         TodoManager.addTodo(title)
+        getAllTodo()
     }
 
     fun deleteTodo(id: Int) {

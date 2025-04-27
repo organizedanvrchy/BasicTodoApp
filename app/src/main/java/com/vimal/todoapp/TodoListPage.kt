@@ -38,7 +38,6 @@ import java.util.Locale
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun TodoListPage(viewModel: TodoViewModel) {
-
     val todoList by viewModel.todoList.observeAsState()
     var inputText by remember {
         mutableStateOf("")
@@ -54,11 +53,14 @@ fun TodoListPage(viewModel: TodoViewModel) {
                 .fillMaxWidth()
                 .padding(7.dp),
             horizontalArrangement = Arrangement.SpaceEvenly
-        ){
+        ) {
             OutlinedTextField(value = inputText, onValueChange = {
                 inputText = it
             })
-            Button(onClick = { /*TODO*/ } ) {
+            Button(onClick = {
+                viewModel.addTodo(inputText)
+                inputText = ""
+            }) {
                 Text(text = "Add")
             }
         }
@@ -66,7 +68,9 @@ fun TodoListPage(viewModel: TodoViewModel) {
             LazyColumn(
                 content = {
                     itemsIndexed(it) { index: Int, item: Todo ->
-                        TodoItem(item = item)
+                        TodoItem(item = item, onDelete = {
+                            viewModel.deleteTodo(item.id)
+                        })
                     }
                 }
             )
@@ -80,7 +84,7 @@ fun TodoListPage(viewModel: TodoViewModel) {
 }
 
 @Composable
-fun TodoItem(item: Todo) {
+fun TodoItem(item: Todo, onDelete: () -> Unit) {
     Row (
         modifier = Modifier
             .fillMaxWidth()
@@ -89,7 +93,7 @@ fun TodoItem(item: Todo) {
             .background(MaterialTheme.colorScheme.primary)
             .padding(16.dp),
         verticalAlignment = Alignment.CenterVertically
-    ){
+    ) {
         Column(
             modifier = Modifier.weight(1f)
         ) {
@@ -104,13 +108,12 @@ fun TodoItem(item: Todo) {
                 color = Color.White
             )
         }
-        IconButton(onClick = { /*TODO*/ }) {
+        IconButton(onClick = onDelete) {
             Icon(
                 painter = painterResource(id = R.drawable.baseline_delete_outline_24),
                 contentDescription = "Delete",
                 tint = Color.White,
             )
         }
-
     }
 }
